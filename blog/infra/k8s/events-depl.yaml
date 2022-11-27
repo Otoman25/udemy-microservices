@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: events-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: events
+  template: 
+    metadata:
+      labels:
+        app: events
+    spec:
+      containers:
+        - name: events
+          image: grich966/events
+          imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: events-cluster-srv
+spec:
+  selector:
+    app: events
+  type: ClusterIP
+  ports:
+    - name: events
+      protocol: TCP
+      port: 4005
+      targetPort: 4005
+
+# This creates a Pod with the event bus image and creates a ClusterIP service that exposes port 4005

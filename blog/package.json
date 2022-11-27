@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "client": "cd client && npm start",
+    "comments": "cd comments && npm start",
+    "events": "cd event-bus && npm start",
+    "moderation": "cd moderation && npm start",
+    "posts": "cd posts && npm start",
+    "query": "cd query && npm start",
+    "start": "concurrently \"npm run client\" \"npm run comments\" \"npm run events\" \"npm run moderation\" \"npm run posts\" \"npm run query\" ",
+    "start:no-posts": "concurrently \"npm run client\" \"npm run comments\" \"npm run events\" \"npm run moderation\" \"npm run query\" "
+  },
+  "devDependencies": {
+    "concurrently": "^1.0.0"
+  }
+}

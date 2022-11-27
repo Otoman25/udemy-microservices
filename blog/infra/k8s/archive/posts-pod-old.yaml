@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: posts
+spec:
+  containers: 
+    - name: posts
+      image: grich966/posts
+      imagePullPolicy: Never
+
+# This creates a simple pod from the image 'grich966/posts' from Docker hub
