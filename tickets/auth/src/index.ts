@@ -1,8 +1,10 @@
 import { json } from 'body-parser';
 import express from 'express';
 import 'express-async-errors'; // Allows for auto handling of async routes
+import mongoose from 'mongoose';
 import { NotFoundError } from './errors/NotFoundError';
 import { errorHandler } from './middlewares/error-handler';
+
 import { currentUser } from './routes/current-user';
 import { signin } from './routes/signin';
 import { signout } from './routes/signout';
@@ -31,6 +33,14 @@ app.all('*', async () => {
 
 app.use(errorHandler);
 
-app.listen(3000, () => {
-    console.log("Listening on port 3000");
-});
+const start = async() => {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth').catch((err) => {
+        console.error(err);
+    });
+
+    app.listen(3000, () => {
+        console.log("Listening on port 3000");
+    });
+};
+
+start();
