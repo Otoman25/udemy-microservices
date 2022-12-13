@@ -11,7 +11,8 @@ import { currentUser } from './routes/current-user';
 import { signin } from './routes/signin';
 import { signout } from './routes/signout';
 import { signup } from './routes/signup';
-import { signupValidator } from './validators/validators';
+import { signinValidator, signupValidator } from './validators/validators';
+import { validateRequest } from './middlewares/validate-request';
 
 const app = express();
 const router = express.Router();
@@ -28,9 +29,9 @@ app.use(
 
 
 app.use(router.get('/api/users/currentuser', currentUser));
-app.use(router.post('/api/users/signin', signin));
+app.use(router.post('/api/users/signin', signinValidator, validateRequest, signin));
 app.use(router.post('/api/users/signout', signout));
-app.use(router.post('/api/users/signup', signupValidator, signup));
+app.use(router.post('/api/users/signup', signupValidator, validateRequest, signup));
 
 // // Example of an async route
 // app.all('*', async (req, res, next) => {
