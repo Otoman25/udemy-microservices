@@ -2,7 +2,9 @@ import express from 'express';
 import { validationResult } from 'express-validator';
 import { BadRequestError } from '../errors/BadRequestError';
 import { RequestValidationError } from '../errors/RequestValidationError';
+import { environment } from '../utils/environment';
 import { User } from '../models/users';
+import * as jwt from 'jsonwebtoken';
 
 const signup = async (req: express.Request, res: express.Response) => {
     const errors = validationResult(req);
@@ -20,6 +22,17 @@ const signup = async (req: express.Request, res: express.Response) => {
 
     const user = User.build({email, password});
     await user.save();
+
+    // User should now be logged in
+    // Generate JWT
+    const userJWT = jwt.sign({
+        id: user.id,
+        email: user.email
+    }, environment.jwt.JWT_KEY);
+
+    req.session = {
+        jwt: userJWT,
+    };
 
     return res.status(200).send(user);
 };
