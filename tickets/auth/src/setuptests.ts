@@ -1,10 +1,13 @@
+import request from 'supertest'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
+import { app } from './app'
 
 let mongo: MongoMemoryServer
 
 declare global {
-  const signin: () => Promise<string[]>
+  // eslint-disable-next-line no-var
+  var signin: () => Promise<string[]>
 }
 
 jest.mock('./utils/environment', () => {
@@ -37,3 +40,15 @@ afterAll(async () => {
   }
   await mongoose.connection.close()
 })
+
+global.signin = async () => {
+  const email = 'test@test.com'
+  const password = 'password'
+
+  const response = await request(app)
+    .post('/api/users/signup')
+    .send({ email, password })
+    .expect(201)
+
+  return response.get('Set-Cookie')
+}

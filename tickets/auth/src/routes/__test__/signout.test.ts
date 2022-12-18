@@ -2,10 +2,7 @@ import request from 'supertest'
 import { app } from '../../app'
 
 it('Sign out successful, users cookie cleared', async () => {
-  await request(app)
-    .post('/api/users/signup')
-    .send({ email: 'test@test.com', password: 'password' })
-    .expect(201)
+  await global.signin()
 
   const response = await request(app)
     .post('/api/users/signout')
