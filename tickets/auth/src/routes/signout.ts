@@ -1,7 +1,9 @@
-import express from 'express';
+import express from 'express'
 
-const signout = (req: express.Request, res: express.Response) => {
-    res.send("signout");
-};
+const signout = (req: express.Request, res: express.Response): void => {
+  req.session = null
 
-export { signout };
+  res.sendStatus(200)
+}
+
+export { signout }

@@ -1,7 +1,7 @@
-import express from 'express';
+import express from 'express'
 
-const currentUser = (req: express.Request, res: express.Response) => {
-    res.send("currentUser");
-};
+const currentUser = async (req: express.Request, res: express.Response): Promise<void> => {
+  res.send({ currentUser: req.currentUser ?? null })
+}
 
-export { currentUser };
+export { currentUser }

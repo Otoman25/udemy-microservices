@@ -1,12 +1,35 @@
-import express from 'express';
+import express from 'express'
+import { BadRequestError } from '../errors/BadRequestError'
+import { User } from '../models/users'
+import { compare } from '../utils/password'
+import * as jwt from 'jsonwebtoken'
+import { environment } from '../utils/environment'
 
-const signin = (req: express.Request, res: express.Response) => {
-    const { email, password } = req.body;
+const signin = async (req: express.Request, res: express.Response): Promise<void> => {
+  const BAD_LOGIN_ATTEMPT_MESSAGE = 'Unable to sign in'
+  const { email, password } = req.body
 
+  const existingUser = await User.findOne({ email })
+  if (existingUser === null) {
+    throw new BadRequestError(BAD_LOGIN_ATTEMPT_MESSAGE)
+  }
 
+  const passwordsMatch = await compare(existingUser.password, password)
 
-    res.send("signIn");
+  if (!passwordsMatch) {
+    throw new BadRequestError(BAD_LOGIN_ATTEMPT_MESSAGE)
+  }
 
-};
+  const userJWT = jwt.sign({
+    id: existingUser.id,
+    email: existingUser.email
+  }, environment.jwt.JWT_KEY)
 
-export { signin };
+  req.session = {
+    jwt: userJWT
+  }
+
+  res.status(200).send(existingUser)
+}
+
+export { signin }

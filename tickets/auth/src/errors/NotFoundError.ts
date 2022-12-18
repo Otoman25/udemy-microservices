@@ -1,15 +1,14 @@
-import { ValidationError } from 'express-validator';
-import { CustomErrorClass } from './CustomErrorClass';
-import { ErrorListSchema } from './ErrorsSchema';
+import { CustomErrorClass } from './CustomErrorClass'
+import { ErrorListSchema } from './ErrorsSchema'
 
 export class NotFoundError extends CustomErrorClass {
-    statusCode = 404;
+  statusCode = 404
 
-    constructor() {
-        super('Route not found');
-    }
+  constructor () {
+    super('Route not found')
+  }
 
-    serializeErrors = (): ErrorListSchema => {
-        return [{ message: 'Not found' }];
-    }
+  serializeErrors = (): ErrorListSchema => {
+    return [{ message: 'Not found' }]
+  }
 }

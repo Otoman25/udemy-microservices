@@ -1,8 +1,8 @@
-export type ErrorsSchema = {
-    errors: ErrorListSchema
-};
+export interface ErrorsSchema {
+  errors: ErrorListSchema
+}
 
-export type ErrorListSchema = {
-    message: string,
-    field?: string,
-}[];
+export type ErrorListSchema = Array<{
+  message: string
+  field?: string
+}>

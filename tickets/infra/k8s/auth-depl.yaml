@@ -21,6 +21,8 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+            - name: COOKIE_SESSION_SECURE
+              value: true
 ---
 apiVersion: v1
 kind: Service
