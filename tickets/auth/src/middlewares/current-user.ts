@@ -19,6 +19,7 @@ declare global {
 export const currentUserMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   if (req.session?.jwt === undefined) {
     next()
+    return
   }
 
   try {

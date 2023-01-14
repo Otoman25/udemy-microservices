@@ -7,7 +7,7 @@ import cookieSession from 'cookie-session'
 import { NotFoundError } from './errors/NotFoundError'
 import { errorHandler } from './middlewares/error-handler'
 
-import { currentUser } from './routes/current-user'
+import { currentUser } from './routes/currentUser'
 import { signin } from './routes/signin'
 import { signout } from './routes/signout'
 import { signup } from './routes/signup'
