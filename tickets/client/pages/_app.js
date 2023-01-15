@@ -1,3 +1,5 @@
+import * as React from 'react'
+import PropTypes from 'prop-types'
 import 'bootstrap/dist/css/bootstrap.css'
 import buildClient from '../api/buildClient'
 import Header from '../components/Header/Header'
@@ -23,6 +25,15 @@ App.getInitialProps = async (appContext) => {
   const pageProps = appContext.Component.getInitialProps ? await appContext.Component?.getInitialProps(appContext.ctx) : {}
 
   return { pageProps, currentUser: data.currentUser }
+}
+
+App.propTypes = {
+  Component: PropTypes.func,
+  pageProps: PropTypes.object,
+  currentUser: PropTypes.shape({
+    email: PropTypes.string,
+    id: PropTypes.string
+  })
 }
 
 export default App

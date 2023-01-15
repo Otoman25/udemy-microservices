@@ -6,12 +6,6 @@ import cookieSession from 'cookie-session'
 
 import { NotFoundError, errorHandler, validateRequest, currentUserMiddleware, environment } from '@thegrinch.learning/common'
 
-import { currentUser } from './routes/currentUser'
-import { signin } from './routes/signin'
-import { signout } from './routes/signout'
-import { signup } from './routes/signup'
-import { signinValidator, signupValidator } from './validators/validators'
-
 const app = express()
 const router = express.Router()
 app.use(json())
@@ -25,10 +19,7 @@ app.use(
   })
 )
 
-app.use(router.get('/api/users/currentuser', currentUserMiddleware, currentUser))
-app.use(router.post('/api/users/signin', signinValidator, validateRequest, signin))
-app.use(router.post('/api/users/signout', signout))
-app.use(router.post('/api/users/signup', signupValidator, validateRequest, signup))
+// app.use(router.post('/api/users/signup', signupValidator, validateRequest, signup))
 
 // // Example of an async route
 // app.all('*', async (req, res, next) => {

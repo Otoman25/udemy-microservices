@@ -1,6 +1,5 @@
 import express from 'express'
-import { BadRequestError } from '../errors/BadRequestError'
-import { environment } from '../utils/environment'
+import { BadRequestError, environment } from '@thegrinch.learning/common'
 import { User } from '../models/users'
 import * as jwt from 'jsonwebtoken'
 

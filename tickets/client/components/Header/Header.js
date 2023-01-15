@@ -1,11 +1,13 @@
 import Link from 'next/link'
+import PropTypes from 'prop-types'
+import * as React from 'react'
 
-export default ({ currentUser }) => {
+const Header = ({ currentUser }) => {
   const links = [
     { label: 'Sign up', href: '/auth/signup', signedInToSee: false },
     { label: 'Sign in', href: '/auth/signin', signedInToSee: false },
     { label: 'Sign out', href: '/auth/signout', signedInToSee: true }
-  ].filter((link) => link.signedInToSee === (currentUser !== null))
+  ].filter((link) => link.signedInToSee === Boolean(currentUser))
 
   return (
         <nav className='navbar navbar-light bg-light'>
@@ -20,3 +22,9 @@ export default ({ currentUser }) => {
         </nav>
   )
 }
+
+Header.propTypes = {
+  currentUser: PropTypes.object
+}
+
+export default Header
