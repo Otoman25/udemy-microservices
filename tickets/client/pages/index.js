@@ -13,9 +13,8 @@ const HomePage = ({ currentUser }) => {
 
 HomePage.getInitialProps = async (context) => {
   const client = buildClient(context)
-  const { data } = await client.get('/api/users/currentuser')
-
-  return data
+  const response = await client.get('/api/users/currentuser').catch(err => err).then(response => response)
+  return { currentUser: response?.data?.currentUser }
 }
 
 HomePage.propTypes = {

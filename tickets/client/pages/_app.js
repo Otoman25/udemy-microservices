@@ -13,7 +13,7 @@ const App = ({ Component, pageProps, currentUser }) => {
   }
   return (
   <>
-    <Header {...pageProps}/>
+    <Header currentUser={currentUser}/>
     <Component {...pageProps}/>
   </>
   )
@@ -21,10 +21,10 @@ const App = ({ Component, pageProps, currentUser }) => {
 
 App.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx)
-  const { data } = await client.get('/api/users/currentuser')
+  const response = await client.get('/api/users/currentuser').catch(err => err).then(response => response)
   const pageProps = appContext.Component.getInitialProps ? await appContext.Component?.getInitialProps(appContext.ctx) : {}
 
-  return { pageProps, currentUser: data.currentUser }
+  return { pageProps, currentUser: response?.data?.currentUser }
 }
 
 App.propTypes = {

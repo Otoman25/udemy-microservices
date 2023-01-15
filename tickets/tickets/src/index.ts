@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 import { app } from './app'
-import { env } from './utils/environment'
+import { environment } from './utils/environment'
 
 const start = async (): Promise<void> => {
   mongoose.set('strictQuery', false)
-  await mongoose.connect(env.mongo.connectionString).catch((err) => {
+  await mongoose.connect(environment.mongo.connectionString).catch((err) => {
     console.error(err)
   })
 

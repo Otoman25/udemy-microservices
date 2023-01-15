@@ -1,7 +1,8 @@
 import express from 'express'
-import { BadRequestError, environment } from '@thegrinch.learning/common'
+import { BadRequestError } from '@thegrinch.learning/common'
 import { User } from '../models/users'
 import * as jwt from 'jsonwebtoken'
+import { environment } from '../utils/environment'
 
 const signup = async (req: express.Request, res: express.Response): Promise<void> => {
   const { email, password } = req.body

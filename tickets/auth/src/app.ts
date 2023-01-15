@@ -4,13 +4,14 @@ import express from 'express'
 import 'express-async-errors' // Allows for auto handling of async routes
 import cookieSession from 'cookie-session'
 
-import { NotFoundError, errorHandler, validateRequest, currentUserMiddleware, environment } from '@thegrinch.learning/common'
+import { NotFoundError, errorHandler, validateRequest, currentUserMiddleware } from '@thegrinch.learning/common'
 
 import { currentUser } from './routes/currentUser'
 import { signin } from './routes/signin'
 import { signout } from './routes/signout'
 import { signup } from './routes/signup'
 import { signinValidator, signupValidator } from './validators/validators'
+import { environment } from './utils/environment'
 
 const app = express()
 const router = express.Router()

@@ -1,8 +1,9 @@
 import express from 'express'
-import { BadRequestError, environment } from '@thegrinch.learning/common'
+import { BadRequestError } from '@thegrinch.learning/common'
 import { User } from '../models/users'
 import { compare } from '../utils/password'
 import * as jwt from 'jsonwebtoken'
+import { environment } from '../utils/environment'
 
 const signin = async (req: express.Request, res: express.Response): Promise<void> => {
   const BAD_LOGIN_ATTEMPT_MESSAGE = 'Unable to sign in'

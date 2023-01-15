@@ -3,8 +3,10 @@ import { json } from 'body-parser'
 import express from 'express'
 import 'express-async-errors' // Allows for auto handling of async routes
 import cookieSession from 'cookie-session'
-
-import { NotFoundError, errorHandler, validateRequest, currentUserMiddleware, environment } from '@thegrinch.learning/common'
+import { create } from './routes/create'
+import { NotFoundError, errorHandler, requireAuth, currentUserMiddleware, validateRequest } from '@thegrinch.learning/common'
+import { environment } from './utils/environment'
+import { createTicketValidator } from './validators/validators'
 
 const app = express()
 const router = express.Router()
@@ -18,6 +20,9 @@ app.use(
     secure: environment.cookieSession.secure
   })
 )
+app.use(currentUserMiddleware(environment.jwt.JWT_KEY))
+
+app.use(router.post('/api/tickets'), requireAuth, createTicketValidator, validateRequest, create)
 
 // app.use(router.post('/api/users/signup', signupValidator, validateRequest, signup))
 

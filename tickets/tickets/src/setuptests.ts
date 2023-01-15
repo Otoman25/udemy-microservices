@@ -2,12 +2,13 @@ import request from 'supertest'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
 import { app } from './app'
+import { environment } from './utils/environment'
+import * as jwt from 'jsonwebtoken'
 
 let mongo: MongoMemoryServer
 
 declare global {
-  // eslint-disable-next-line no-var
-  var signin: () => Promise<string[]>
+  var signin: () => string[];
 }
 
 jest.mock('./utils/environment', () => {
@@ -19,12 +20,11 @@ jest.mock('./utils/environment', () => {
   }
 })
 
-
 beforeAll(async () => {
   mongo = await MongoMemoryServer.create()
   const mongoUri = mongo.getUri()
-  mongoose.set('strictQuery', false)
 
+  mongoose.set('strictQuery', false)
   await mongoose.connect(mongoUri, {})
 })
 
@@ -43,14 +43,15 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-global.signin = async () => {
-  const email = 'test@test.com'
-  const password = 'password'
+global.signin = (): string[] => {
+  const payload = {
+    id: 'abc',
+    email: 'test@test.com'
+  }
 
-  const response = await request(app)
-    .post('/api/users/signup')
-    .send({ email, password })
-    .expect(201)
+  const token = jwt.sign(payload, environment.jwt.JWT_KEY)
+  const sessionJSON = JSON.stringify({ jwt: token })
+  const base64 = Buffer.from(sessionJSON).toString('base64')
 
-  return response.get('Set-Cookie')
+  return [`session=${base64}`]
 }

@@ -10,10 +10,7 @@ const SignIn = () => {
     url: '/api/users/signin',
     method: 'post',
     body: { email, password },
-    onSuccess: (data) => {
-      console.log(data)
-      Router.push('/')
-    }
+    onSuccess: () => Router.push('/')
   })
 
   const onSubmit = async (event) => {
