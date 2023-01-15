@@ -8,7 +8,7 @@ import * as jwt from 'jsonwebtoken'
 let mongo: MongoMemoryServer
 
 declare global {
-  var signin: () => string[];
+  var signin: (id?: string) => string[];
 }
 
 jest.mock('./utils/environment', () => {
@@ -43,9 +43,10 @@ afterAll(async () => {
   await mongoose.connection.close()
 })
 
-global.signin = (): string[] => {
+global.signin = (id?: string): string[] => {
+  id = id ?? new mongoose.Types.ObjectId().toHexString()
   const payload = {
-    id: 'abc',
+    id,
     email: 'test@test.com'
   }
 

@@ -26,7 +26,7 @@ app.use(
   })
 )
 
-app.use(router.get('/api/users/currentuser', currentUserMiddleware, currentUser))
+app.use(router.get('/api/users/currentuser', currentUserMiddleware(environment.jwt.JWT_KEY), currentUser))
 app.use(router.post('/api/users/signin', signinValidator, validateRequest, signin))
 app.use(router.post('/api/users/signout', signout))
 app.use(router.post('/api/users/signup', signupValidator, validateRequest, signup))
