@@ -2,7 +2,7 @@ import request from 'supertest'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
 import { app } from './app'
-import { environment } from './utils/environment'
+import { environment, EnvironmentVariables } from './utils/environment'
 import * as jwt from 'jsonwebtoken'
 
 let mongo: MongoMemoryServer
@@ -12,13 +12,25 @@ declare global {
 }
 
 jest.mock('./utils/environment', () => {
-  return {
-    environment: {
-      jwt: { JWT_KEY: 'test'},
-      cookieSession: { secure: false }
+  
+  const env: EnvironmentVariables = {
+    jwt: { JWT_KEY: 'test' },
+    cookieSession: { secure: false },
+    mongo: {
+      connectionString: 'a'
+    },
+    nats: {
+      clusterId: 'a',
+      connectionString: 'a',
+      clientId: 'a',
+      queueGroupName: 'a'
     }
   }
+
+  return { environment: env }
 })
+
+jest.mock('./NatsWrapper')
 
 beforeAll(async () => {
   mongo = await MongoMemoryServer.create()
@@ -29,11 +41,13 @@ beforeAll(async () => {
 })
 
 beforeEach(async () => {
+  jest.clearAllMocks()
   const collections = await mongoose.connection.db.collections()
 
   for (const collection of collections) {
     await collection.deleteMany({})
   }
+
 })
 
 afterAll(async () => {

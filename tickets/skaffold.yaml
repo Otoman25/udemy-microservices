@@ -32,3 +32,27 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: grich966/tickets-orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: grich966/tickets-expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: grich966/tickets-payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .

@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current'
 
 // expected parameters to build a user
 interface TicketProperties {
@@ -17,6 +18,8 @@ interface TicketDocument extends mongoose.Document {
   title: string
   price: number
   userId: string
+  version: number
+  orderId?: string
 }
 
 // Schema for the mongoose model
@@ -32,18 +35,21 @@ const ticketSchema: Schema = new mongoose.Schema({
   userId: {
     type: String,
     required: true
+  },
+  orderId: {
+    type: String,
+    required: false
   }
 }, {
   toJSON: {
-    transform (doc, ret) {
-      delete ret.password
-
-      ret.id = ret._id
-      delete ret._id
+    transform(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
     },
-    versionKey: false
-  }
+  },
 })
+ticketSchema.set('versionKey', 'version')
+ticketSchema.plugin(updateIfCurrentPlugin)
 
 ticketSchema.statics.build = (properties: TicketProperties) => {
   return new Ticket(properties)
