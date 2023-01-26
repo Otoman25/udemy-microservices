@@ -1,5 +1,5 @@
-import { Publisher, Subject, TicketUpdatedEvent } from "@thegrinch.learning/common"
+import { AbstractPublisher, Subject, TicketUpdatedEvent } from "@thegrinch.learning/common"
 
-export class TicketUpdatedPublisher extends Publisher<TicketUpdatedEvent> {
+export class TicketUpdatedPublisher extends AbstractPublisher<TicketUpdatedEvent> {
     readonly subject = Subject.TicketUpdated;
 } 

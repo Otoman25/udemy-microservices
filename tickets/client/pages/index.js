@@ -1,5 +1,4 @@
 import * as React from 'react'
-import buildClient from '../api/buildClient'
 import PropTypes from 'prop-types'
 
 const HomePage = ({ currentUser }) => {
@@ -12,9 +11,7 @@ const HomePage = ({ currentUser }) => {
 }
 
 HomePage.getInitialProps = async (context) => {
-  const client = buildClient(context)
-  const response = await client.get('/api/users/currentuser').catch(err => err).then(response => response)
-  return { currentUser: response?.data?.currentUser }
+  return {}
 }
 
 HomePage.propTypes = {

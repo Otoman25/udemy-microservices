@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@thegrinch.learning/common": "^1.0.27",
+    "@thegrinch.learning/common": "^1.0.28",
     "@types/bull": "^4.10.0",
     "bull": "^4.10.2",
     "node-nats-streaming": "^0.3.2",

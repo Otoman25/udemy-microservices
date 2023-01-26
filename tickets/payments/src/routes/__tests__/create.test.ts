@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import request from 'supertest'
 import { app } from '../../app'
 import { Order, OrderStatus } from '../../models/orders'
+import { Payment } from '../../models/payment'
 import { stripe } from '../../stripe'
 
 jest.mock('../../stripe')
@@ -85,4 +86,8 @@ it('returns a 201 with valid inputs', async () => {
         amount: order.price,
         currency: 'gbp'
     })
+
+    const payment = await Payment.findOne({ orderId: order.id })
+
+    expect(payment).not.toBeNull()
 })

@@ -1,5 +1,5 @@
-import { Subject, Publisher, OrderCancelledEvent } from '@thegrinch.learning/common';
+import { Subject, AbstractPublisher, OrderCancelledEvent } from '@thegrinch.learning/common';
 
-export class OrderCancelledPublisher extends Publisher<OrderCancelledEvent> {
+export class OrderCancelledPublisher extends AbstractPublisher<OrderCancelledEvent> {
   subject: Subject.OrderCancelled = Subject.OrderCancelled;
 }

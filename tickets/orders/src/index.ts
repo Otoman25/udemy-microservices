@@ -5,6 +5,7 @@ import { natsWrapper } from './NatsWrapper'
 import { TicketCreatedListener } from './events/listeners/TicketCreatedListener'
 import { TicketUpdatedListener } from './events/listeners/TicketUpdatedListener'
 import { ExpirationCompleteListener } from './events/listeners/ExpirationCompleteListener'
+import { PaymentCreatedListener } from './events/listeners/PaymentCreatedListener'
 
 const start = async (): Promise<void> => {
   mongoose.set('strictQuery', false)
@@ -29,6 +30,7 @@ const start = async (): Promise<void> => {
   new TicketCreatedListener(natsWrapper.client).listen()
   new TicketUpdatedListener(natsWrapper.client).listen()
   new ExpirationCompleteListener(natsWrapper.client).listen()
+  new PaymentCreatedListener(natsWrapper.client).listen()
 
   app.listen(3000, () => {
     console.log('Listening on port 3000')

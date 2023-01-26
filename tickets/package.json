@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "postinstall": "(cd auth && npm upgrade @thegrinch.learning/common); (cd client && npm upgrade @thegrinch.learning/common); (cd expiration && npm upgrade @thegrinch.learning/common); (cd orders && npm upgrade @thegrinch.learning/common); (cd payments && npm upgrade @thegrinch.learning/common); (cd tickets && npm upgrade @thegrinch.learning/common)"
+  }
+}

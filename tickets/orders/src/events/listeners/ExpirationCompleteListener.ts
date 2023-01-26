@@ -17,6 +17,7 @@ export class ExpirationCompleteListener extends AbstractListener<ExpirationCompl
         }
 
         if(order.status === OrderStatus.Completed) {
+            message.ack()
             throw new Error('Order has been completed')
         }
 

@@ -1,10 +1,10 @@
 import { randomBytes } from "crypto"
-import { Publisher } from "./AbstractPublisher/AbstractPublisher"
+import { AbstractPublisher } from "./AbstractPublisher/AbstractPublisher"
 import { Subject } from "./Types/Subjects"
 import { TicketCreatedEvent } from "./Types/TicketEvents"
 import nats from 'node-nats-streaming'
 
-export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
+export class TicketCreatedPublisher extends AbstractPublisher<TicketCreatedEvent> {
     readonly subject = Subject.TicketCreated;
 }
 

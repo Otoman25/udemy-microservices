@@ -1,5 +1,5 @@
-import { ExpirationCompleteEvent, Publisher, Subject } from "@thegrinch.learning/common";
+import { ExpirationCompleteEvent, AbstractPublisher, Subject } from "@thegrinch.learning/common";
 
-export class ExpirationCompletePublisher extends Publisher<ExpirationCompleteEvent> {
+export class ExpirationCompletePublisher extends AbstractPublisher<ExpirationCompleteEvent> {
     readonly subject = Subject.ExpirationComplete;
 }

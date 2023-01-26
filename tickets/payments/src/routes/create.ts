@@ -1,6 +1,9 @@
 import { BadRequestError, NotFoundError, OrderStatus } from '@thegrinch.learning/common'
 import express, { Request, Response } from 'express'
+import { PaymentCreatedPublisher } from '../events/publishers/PaymentCreatedPublisher'
 import { Order } from '../models/orders'
+import { Payment } from '../models/payment'
+import { natsWrapper } from '../NatsWrapper'
 import { stripe } from '../stripe'
 
 const create = async (req: express.Request, res: express.Response): Promise<void> => {
@@ -16,13 +19,26 @@ const create = async (req: express.Request, res: express.Response): Promise<void
     throw new BadRequestError('Cannot pay for a cancelled order')
   }
 
-  stripe.charges.create({
+  const charge = await stripe.charges.create({
     amount: order.price,
     currency: 'gbp',
     source: token
   })
 
-  res.status(201).send()
+  const payment = Payment.build({
+    orderId,
+    stripeId: charge.id
+  })
+
+  await payment.save()
+
+  new PaymentCreatedPublisher(natsWrapper.client).publish({
+    id: payment._id,
+    orderId,
+    stripeId: charge.id
+  })
+  
+  res.status(201).send({ id: payment.id })
 }
 
 export { create }
