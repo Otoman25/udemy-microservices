@@ -83,7 +83,7 @@ it('returns a 201 with valid inputs', async () => {
 
     expect(stripe.charges.create).toBeCalledWith({
         source: 'tok_visa',
-        amount: order.price,
+        amount: order.price * 100,
         currency: 'gbp'
     })
 
