@@ -4,7 +4,7 @@ import express, { Request, Response } from 'express'
 import { Order } from '../models/orders'
 import { Ticket, TicketDocument } from '../models/tickets'
 import { natsWrapper } from '../NatsWrapper'
-import { OrderCreatedPublisher } from '../publishers/OrderCreatedPublisher'
+import { OrderCreatedPublisher } from '../events/publishers/OrderCreatedPublisher'
 
 const EXPIRATION_WINDOW_SECONDS = 15 * 60
 

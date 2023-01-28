@@ -19,8 +19,12 @@ const create = async (req: express.Request, res: express.Response): Promise<void
     throw new BadRequestError('Cannot pay for a cancelled order')
   }
 
+  if(order.status === OrderStatus.Completed) {
+    throw new BadRequestError('Order has already been paid for')
+  }
+
   const charge = await stripe.charges.create({
-    amount: order.price,
+    amount: order.price * 100,
     currency: 'gbp',
     source: token
   })

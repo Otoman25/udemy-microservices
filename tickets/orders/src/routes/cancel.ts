@@ -3,7 +3,7 @@ import { NotAuthorizedError, NotFoundError, OrderStatus } from '@thegrinch.learn
 import { Request, Response } from 'express'
 import { Order } from '../models/orders'
 import { natsWrapper } from '../NatsWrapper'
-import { OrderCancelledPublisher } from '../publishers/OrderCancelledPublisher'
+import { OrderCancelledPublisher } from '../events/publishers/OrderCancelledPublisher'
 
 const cancel = async (req: Request, res: Response): Promise<void> => {
   const {orderId} = req.params

@@ -4,6 +4,7 @@ import { environment } from './utils/environment'
 import { natsWrapper } from './NatsWrapper'
 import { OrderCancelledListener } from './events/listeners/OrderCancelledListener'
 import { OrderCreatedListener } from './events/listeners/OrderCreatedListener'
+import { OrderCompletedListener } from './events/listeners/OrderCompletedListener'
 
 const start = async (): Promise<void> => {
   mongoose.set('strictQuery', false)
@@ -28,6 +29,7 @@ const start = async (): Promise<void> => {
 
   new OrderCancelledListener(natsWrapper.client).listen()
   new OrderCreatedListener(natsWrapper.client).listen()
+  new OrderCompletedListener(natsWrapper.client).listen()
 
   app.listen(3000, () => {
     console.log('Listening on port 3000')

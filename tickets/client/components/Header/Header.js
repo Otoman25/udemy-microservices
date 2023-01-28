@@ -6,6 +6,8 @@ const Header = ({ currentUser }) => {
   const links = [
     { label: 'Sign up', href: '/auth/signup', signedInToSee: false },
     { label: 'Sign in', href: '/auth/signin', signedInToSee: false },
+    { label: 'Sell tickets', href: '/tickets/new', signedInToSee: true },
+    { label: 'My orders', href: '/orders', signedInToSee: true },
     { label: 'Sign out', href: '/auth/signout', signedInToSee: true }
   ].filter((link) => link.signedInToSee === Boolean(currentUser))
 
