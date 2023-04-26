@@ -1,4 +1,5 @@
-# tickets
+# Blog and Ticket sales platform in a microservice architecture
+
 A microservice project written in JS/TS with Docker & Kubernetes. Uses skaffold for dev purposes
 
 Client communicates via requests to the /api/${service} routes
