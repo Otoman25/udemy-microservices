@@ -1,12 +1,12 @@
 # Blog and Ticket sales platform in a microservice architecture
 
-/blog:
+/**blog**:
 Simple implementation of a post/comment system with basic microservices. With a hand-written event bus
 
 /docker:
 An example docker file
 
-/tickets:
+/**tickets**:
 Ticket sales platform in a microservice architecture. Using Mongo, Express, React, Node and nats-streaming-server as an event bus
 
 Client communicates via requests to the /api/${service} routes
@@ -15,9 +15,9 @@ Services communicate via the nats streaming server and follows an event based ar
 - Auth service
 - Client
 - Common library
-- Expiration service
+- Order expiration service (unlocks tickets for sale again)
 - Infrastructure (kubernetes)
-- Nats proof of concept
+- Nats-streaming-server (used as an event bus)
 - Orders service
 - Payments service
 - Ticket service
